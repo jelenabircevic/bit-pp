@@ -1,7 +1,10 @@
-var multiplicationTable = function (number) {
+'use strict'
+var multiplicationTable = function (number) {  
     var topBorder = "╔═";
     var bottomBorder = "╚═";
     var table = "║  X  ║";
+    var t;
+  
     for (t = 1; t <= number; t++) {
         if (t < 10) table += "   " + t;
         else table += "  " + t;
@@ -27,7 +30,7 @@ var multiplicationTable = function (number) {
     }
 
     table += "══╣\n";
-
+    
     for (i = 1; i <= number; i++) {
         if (i < 10) table += '║  ' + i + '  ║';
         else table += '║ ' + i + '  ║';
@@ -41,6 +44,7 @@ var multiplicationTable = function (number) {
 
     }
     return topBorder + table + bottomBorder;
+    var m, i, j;
 }
 
 console.log(multiplicationTable(31));
