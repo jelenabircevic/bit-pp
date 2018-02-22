@@ -33,7 +33,6 @@
                     counter++;
                 }
             });
-            console.log(counter, this.totalLength() + movie.length);
             if (this.totalLength() + movie.length <= 480 && counter < 4) {
                 this.list.push(movie);
                 this.movieCount++;
@@ -68,12 +67,11 @@
         this.totalMovieCount = function () {
             var n = 0;
             this.listOfPrograms.forEach(function (program, i) {
-                n += program.list.length;
+                n += program.movieCount;
             });
             return n;
         }
         this.addProgram = function (program) {
-            console.log('movie count:', program.movieCount, ' max: ', this.maxNumberOfMovies);
             if ((this.totalMovieCount() + program.movieCount) <= this.maxNumberOfMovies) {
                 this.listOfPrograms.push(program);
             } else {
