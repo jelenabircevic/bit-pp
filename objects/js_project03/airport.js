@@ -1,147 +1,147 @@
 "use strict";
-(function() {
+(function () {
     console.log("Hello!");
 
     function Person(name, surname) {
         this.name = name;
         this.surname = surname;
-        this.getData = function() {
-            return this.name + " " + this.surname;
-        };
     }
+    Person.prototype.getData = function () {
+        return this.name + " " + this.surname;
+    };
 
     function Seat(number, category) {
         this.number = Number(number) || Math.ceil(10 + 90 * Math.random());
         this.category = category || "e";
-        this.getData = function() {
-            if (this.category == 'b') {
-                var cat = 'bussiness';
-            } else {
-                cat = 'economy';
-            }
-            return this.number + ", " + cat;
-        };
     }
+    Seat.prototype.getData = function () {
+        if (this.category == 'b') {
+            var cat = 'bussiness';
+        } else {
+            cat = 'economy';
+        }
+        return this.number + ", " + cat;
+    };
 
     function Passenger(person, seat) {
         this.person = person;
         this.seat = seat;
-        this.getData = function() {
-            return this.seat.getData() + ", " + this.person.getData();
-        };
     }
+    Passenger.prototype.getData = function () {
+        return this.seat.getData() + ", " + this.person.getData();
+    };
 
     function Flight(relation, date) {
         this.relation = relation;
         this.date = new Date(date);
         this.passengerList = [];
-        this.businessCount = function() {
-            var counter = 0;
-            this.passengerList.forEach(function(item) {
-                if (item.seat.category == 'b') {
-                    counter++;
-                }
-            });
-            return counter;
-        }
-        this.getDataModified = function() {
-            var s =
-                "\t\t" +
-                this.date.getDate() +
-                "." +
-                (this.date.getMonth() + 1) +
-                "." +
-                this.date.getFullYear() +
-                " " +
-                this.relationFormat() + ", business passengers: " + this.businessCount();
-            this.passengerList.forEach(function(passenger) {
-                s += "\n\t\t\t\t" + passenger.getData();
-            });
-            return s;
-        };
         this.seats = Array.from({ length: 100 }, (v, x) => x + 1);
-        this.addPassenger = function(passenger) {
+    }
+    Flight.prototype.businessCount = function () {
+        var counter = 0;
+        this.passengerList.forEach(function (item) {
+            if (item.seat.category == 'b') {
+                counter++;
+            }
+        });
+        return counter;
+    }
+    Flight.prototype.getDataModified = function () {
+        var s =
+            "\t\t" +
+            this.date.getDate() +
+            "." +
+            (this.date.getMonth() + 1) +
+            "." +
+            this.date.getFullYear() +
+            " " +
+            this.relationFormat() + ", business passengers: " + this.businessCount();
+        this.passengerList.forEach(function (passenger) {
+            s += "\n\t\t\t\t" + passenger.getData();
+        });
+        return s;
+    };
+    Flight.prototype.addPassenger = function (passenger) {
 
-            function checkPassenger(p, list, seats) {
-                if (list.length < 100) {
-                    if (index == -1) {
-                        index = Math.ceil(seats.length * Math.random());
-                        p.seat.number = seats[index];
-                    };
-                    return p;
-                } else {
-                    console.log("Flight full!");
-                    return false;
-                }
-            };
-
-            for (var i = 0; i < this.passengerList.length; i++) {
-                if ((passenger.person.name == this.passengerList[i].person.name) && (passenger.person.surname == this.passengerList[i].person.surname)) {
-                    this.seats.push(this.passengerList[i].seat.number);
-                    this.passengerList.splice(i, 1);
-                }
-            };
-            var index = this.seats.indexOf(passenger.seat.number);
-            console.log(index, passenger.seat.number);
-            this.passengerList.push(checkPassenger(passenger, this.passengerList, this.seats));
-            this.seats.splice(index, 1);
+        function checkPassenger(p, list, seats) {
+            if (list.length < 100) {
+                if (index == -1) {
+                    index = Math.ceil(seats.length * Math.random());
+                    p.seat.number = seats[index];
+                };
+                return p;
+            } else {
+                console.log("Flight full!");
+                return false;
+            }
         };
-        this.firstLastConsonant = function(s) {
-            var rel = "";
-            var vowels = "aeiouAEIOU";
-            for (var i = 0; i < s.length; i++) {
-                if (vowels.indexOf(s[i]) == -1 && s[i] != " ") {
-                    rel += s[i].toUpperCase();
-                    i = s.length;
-                    for (var j = s.length - 1; j > 0; j--) {
-                        if (vowels.indexOf(s[j]) == -1 && s[j] != " ") {
-                            rel += s[j].toUpperCase();
-                            j = 0;
-                        }
+
+        for (var i = 0; i < this.passengerList.length; i++) {
+            if ((passenger.person.name == this.passengerList[i].person.name) && (passenger.person.surname == this.passengerList[i].person.surname)) {
+                this.seats.push(this.passengerList[i].seat.number);
+                this.passengerList.splice(i, 1);
+            }
+        };
+        var index = this.seats.indexOf(passenger.seat.number);
+        console.log(index, passenger.seat.number);
+        this.passengerList.push(checkPassenger(passenger, this.passengerList, this.seats));
+        this.seats.splice(index, 1);
+    };
+    Flight.prototype.firstLastConsonant = function (s) {
+        var rel = "";
+        var vowels = "aeiouAEIOU";
+        for (var i = 0; i < s.length; i++) {
+            if (vowels.indexOf(s[i]) == -1 && s[i] != " ") {
+                rel += s[i].toUpperCase();
+                i = s.length;
+                for (var j = s.length - 1; j > 0; j--) {
+                    if (vowels.indexOf(s[j]) == -1 && s[j] != " ") {
+                        rel += s[j].toUpperCase();
+                        j = 0;
                     }
                 }
             }
-            return rel;
-        };
-        this.relationFormat = function() {
-            var a = this.relation;
-            a = a.split(" - ");
-            return (
-                this.firstLastConsonant(a[0]) + " - " + this.firstLastConsonant(a[1])
-            );
-        };
-    }
+        }
+        return rel;
+    };
+    Flight.prototype.relationFormat = function () {
+        var a = this.relation;
+        a = a.split(" - ");
+        return (
+            this.firstLastConsonant(a[0]) + " - " + this.firstLastConsonant(a[1])
+        );
+    };
 
     function Airport() {
         this.name = "Nikola Tesla";
         this.flightList = [];
-        this.addFlight = function(flight) {
-            this.flightList.push(flight);
-        };
-        this.passengerNumber = function() {
-            var counter = 0;
-            this.flightList.forEach(function(flight) {
-                counter += flight.passengerList.length;
-            });
-            return counter;
-        };
-        this.getData = function() {
-            var counter = 0;
-            var s =
-                "Airport: " +
-                this.name +
-                ", total passengers: " +
-                this.passengerNumber();
-            this.flightList.forEach(function(flight) {
-                counter += flight.businessCount();
-            });
-            s += ", total business passengers: " + counter;
-            this.flightList.forEach(function(flight) {
-                s += "\n" + flight.getDataModified();
-            });
-            return s;
-        };
     }
+    Airport.prototype.addFlight = function (flight) {
+        this.flightList.push(flight);
+    };
+    Airport.prototype.passengerNumber = function () {
+        var counter = 0;
+        this.flightList.forEach(function (flight) {
+            counter += flight.passengerList.length;
+        });
+        return counter;
+    };
+    Airport.prototype.getData = function () {
+        var counter = 0;
+        var s =
+            "Airport: " +
+            this.name +
+            ", total passengers: " +
+            this.passengerNumber();
+        this.flightList.forEach(function (flight) {
+            counter += flight.businessCount();
+        });
+        s += ", total business passengers: " + counter;
+        this.flightList.forEach(function (flight) {
+            s += "\n" + flight.getDataModified();
+        });
+        return s;
+    };
 
     function createFlight(relation, date) {
         return new Flight(relation, date);

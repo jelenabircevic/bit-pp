@@ -14,12 +14,12 @@
         this.name = name;
         this.price = price;
         this.bestBefore = new Date(d[2], d[1] - 1, d[0]);
-        this.getInfo = function () {
+    }
+        Product.prototype.getInfo = function () {
             var code = this.name.substring(0, 1) + this.name.substring((this.name.length - 1));
             // var date = this.bestBefore.substring(0,10);
             return code.toUpperCase() + this.id + ', ' + this.name + ', ' + this.price.toFixed(2) + ', ' + this.bestBefore;
         };
-    }
 
     var coffee = new Product('Minas', 125.50, '30-4-2018');
     var chocolate = new Product('Galeb', 239.99, '15-06-2019');
@@ -29,7 +29,8 @@
 
     function ShoppingBag() {
         this.list = [];
-        this.avgPrice = function () {
+    }
+        ShoppingBag.prototype.avgPrice = function () {
             var sum = 0;
             this.list.forEach(function(product){
                 console.log(product.price);
@@ -38,14 +39,14 @@
             // console.log(sum);
             return (sum /= this.list.length).toFixed(3);
         };
-        this.addProduct = function (product) {
+        ShoppingBag.prototype.addProduct = function (product) {
             if (product.bestBefore - new Date() > 0) {
                 this.list.push(product);
             } else {
                 console.log('Kakva ste vi ovo prodavnica!!?');
             }
         };
-        this.getMostExpensive = function () {
+        ShoppingBag.prototype.getMostExpensive = function () {
             var max = [this.list[0].price, 0];
             this.list.forEach(function(product, i){
                 if (max[0] < product.price) {
@@ -54,7 +55,7 @@
             });
             return this.list[max[1]].getInfo();
         };
-        this.totalPrice = function () {
+        ShoppingBag.prototype.totalPrice = function () {
             var sum = 0;
 
             this.list.forEach(function (product) {
@@ -63,7 +64,6 @@
             return sum;
         };
 
-    }
 
     function PaymentCard(balance, active, date) {
         var d = date.split('-');
