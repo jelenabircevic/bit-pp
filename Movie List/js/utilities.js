@@ -14,6 +14,7 @@ function validateData(t, d, g) {
     }
     return false;
 }
+
 function validateProgram(d) {
     if (!d) {
         err2.textContent = 'Please enter date!';
@@ -24,15 +25,18 @@ function validateProgram(d) {
     }
     return false;
 }
+
 function validateAdding(movie, program) {
     if (movie == '-' || program == '-') {
         err3.style.visibility = 'visible';
         err3.textContent = 'Choose movie and/or program!'
     } else {
+        err3.style.visibility = 'hidden';
         return true;
     }
     return false;
 }
+
 function updateList() {
 
     var liNode = document.createElement('li');
@@ -44,7 +48,7 @@ function updateList() {
     selectM.appendChild(updateSelect(liText));
     var clearX = document.querySelector('#i' + i);
 
-    clearX.addEventListener('click', function (event) {
+    clearX.addEventListener('click', function(event) {
         var index = parseInt(event.target.id.substring(1));
         duration -= movieList[index].duration;
         movieList.splice(index, 1);
@@ -85,6 +89,7 @@ function updateSelect(item) {
 function updateCounter() {
     span.textContent = duration + 'min';
 }
+
 function clearLi(j) {
     var wantedLi = ul.children[j];
     wantedLi.parentNode.removeChild(wantedLi);
@@ -93,6 +98,7 @@ function clearLi(j) {
         k.id = 'i' + (parseInt(k.id.substring(1)) - 1);
     }
 }
+
 function fetchData() {
     var movieTitle = document.querySelector('#title');
     var movieLength = document.querySelector('#length');
@@ -111,7 +117,8 @@ function fetchProgram() {
         inputProgramList[l] = new Program(programDate.value);
         resetProgram(programDate); //<---
         return inputProgramList[l];
-    } return {};
+    }
+    return {};
 
 }
 
@@ -121,30 +128,34 @@ function fetchAdding() {
     var mIndex;
     var pIndex;
     if (validateAdding(movie.value, program.value)) {
-        
-        programList.forEach(function (p, g) {
-            if (p.getData() == program.value) {
-                pIndex = g;
+
+        movieList.forEach(function(m, f) {
+            if (m.getData() == movie.value) {
+                mIndex = f;
             }
         });
-        movieList.forEach(function (m, g) {
-            if (m.getData() == movie.value) {
-                mIndex = g;
+        programList.forEach(function(p, g) {
+            // when adding another movie to the same program, error occurs bacause we didn't update <select> nor <ul>, so p.getData() has number of movies and length, but our program.value has still TBA
+            if (p.getData() == program.value) {
+                pIndex = g;
             }
         });
         return [mIndex, pIndex];
 
     }
-    return [];
+    return false;
 }
+
 function reset(a, b, c) {
     a.value = '';
     b.value = '';
     c.value = '-';
 }
-function resetProgram(a) {  //<---
+
+function resetProgram(a) { //<---
     a.value = '';
 }
+
 function addMovie(obj) {
     movieList.push(obj);
     updateList();
@@ -161,5 +172,3 @@ function addMovieToProgram(movie, program) {
     program.movieList.push(movie);
     k++;
 }
-
-
