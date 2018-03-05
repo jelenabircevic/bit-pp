@@ -45,14 +45,15 @@ addmtp.addEventListener("click", function(event) {
     var input = fetchAdding();
     if (input) {
         var movie = movieList[input[0]];
+        console.log(title)
         var program = programList[input[1]];
-        console.log(input, movie, program);
+        // console.log(input, movie, program);
         if (program.movieList.hasElement(movie)) {
             err3.textContent =
-                movie.name + " is already added to this program. Choose another movie!";
+                movie.title + " is already added to this program. Choose another movie!";
             err3.style.visibility = "visible";
         } else {
-            addMovieToProgram(movie, program);
+            addMovieToProgram(movie, program, input[1]);
         }
     }
 });

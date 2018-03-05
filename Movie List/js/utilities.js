@@ -135,7 +135,7 @@ function fetchAdding() {
             }
         });
         programList.forEach(function(p, g) {
-            // when adding another movie to the same program, error occurs bacause we didn't update <select> nor <ul>, so p.getData() has number of movies and length, but our program.value has still TBA
+            // when adding another movie to the same program, error occurs because we didn't update <select> nor <ul>, so p.getData() has number of movies and length, but our program.value has still TBA
             if (p.getData() == program.value) {
                 pIndex = g;
             }
@@ -168,7 +168,19 @@ function addProgram(obj) {
 
 }
 
-function addMovieToProgram(movie, program) {
+function addMovieToProgram(movie, program, pIndex) {
     program.movieList.push(movie);
-    k++;
+    updateProgramSelect(program, pIndex);
+}
+
+function updateProgramSelect(program, pIndex) {
+    var option = selectP.firstElementChild.nextElementSibling;
+    var li = ulProgram.firstElementChild;
+
+    for (var i = 0; i < pIndex; i++) {
+        option = option.nextElementSibling;
+        li = li.nextElementSibling;
+    }
+    option.textContent = program.getData();
+    li.textContent = program.getData();
 }
