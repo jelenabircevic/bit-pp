@@ -88,6 +88,12 @@ var UIModule = (function() {
         failedPercent.textContent = parseInt(parseInt(failedNumber.textContent) / totalExams * 100) + '%';
     }
 
+    function reset() {
+        subjectNameInput.value = '-';
+        studentNameInput.value = '';
+        studentGradeInput.value = '';
+    }
+
     return {
         UISelectors : UISelectors,
         status : status,
@@ -97,7 +103,8 @@ var UIModule = (function() {
         clearError : clearError,
         updateLists : updateLists,
         updateStudentCounter : updateStudentCounter,
-        updateStats : updateStats
+        updateStats : updateStats,
+        reset : reset
     }
 
 })();

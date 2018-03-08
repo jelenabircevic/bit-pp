@@ -55,6 +55,8 @@ var mainModule = (function(UIModule, dataModule) {
         
         UIModule.updateStudentCounter(studentList.length);
 
+        UIModule.reset();
+
     }
 
 })(UIModule, dataModule);
