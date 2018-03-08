@@ -125,6 +125,6 @@ function max(arr) {
 
 console.log(max([2, 7, 3, 8, 5.4]));
 
-let f = (...args) => console.log(arguments, args);
+let f = (...args) => console.log(args)
 
 f(2,3,4,5,6,7);
