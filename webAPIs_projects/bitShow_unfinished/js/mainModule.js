@@ -49,7 +49,7 @@ let mainModule = ((UIModule, dataModule) => {
 
     checkSearch.addEventListener('blur', () => {
         clearInterval(searchInterval);
-    }
+    })
 
     
 
